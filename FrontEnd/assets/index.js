@@ -87,12 +87,12 @@ const fetchCategories = () => {
       btn.innerHTML = category.name
 
       btn.addEventListener('click', () => {
-        const workToDisplay = works.filter((work) => {
+        const workToDisplay = works.filter((work) => { // filtrage de travaux works//
           return work.category.id == category.id;
         });
         createGallery(workToDisplay);
       })
-      document.querySelector('.filters-container').appendChild(btn)
+      document.querySelector('.filters-container').appendChild(btn) // ajouter filtre contener//
 
       // Filtre gallery modale //
 
