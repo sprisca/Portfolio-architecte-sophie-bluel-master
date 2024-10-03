@@ -11,6 +11,7 @@ const fetchWorks = () => {
         works = data;
         createGallery(works);
       })
+      
       .catch((error) => {
         console.log(error);
       });
@@ -147,7 +148,7 @@ if (token !== null) {
 
 }
 
-// Modale //
+//Preparation de l'appel de boite de dialogue Modale //
  
 const dialog = document.getElementById("modal");
 const btnEdition = document.querySelector(".btnEdition");
@@ -157,7 +158,7 @@ btnEdition.addEventListener("click", function(){
   modal.showModal()
 });
 
-// Modale ajout  //
+// l'ouverture de la modale  //
 
 const addPicsBtn = document.getElementById("addPicsBtn");
 const modalAdd = document.querySelector(".modalAdd");
@@ -166,7 +167,7 @@ addPicsBtn.addEventListener("click", function() {
   modalAdd.showModal()
 });
 
-// Retour modale //
+// Retour vers la modale //
 
 const returnModale = document.querySelector(".fa-arrow-left");
 
@@ -174,7 +175,7 @@ returnModale.addEventListener("click", function() {
   modal.showModal()
 });
 
-// Fermeture modale //
+// Fermeture des modales //
 const close1 = document.querySelector(".closeModal");
 const close2 = document.querySelector(".closeModal2");
 
@@ -189,7 +190,7 @@ close2.addEventListener("click", function(){
 });
 
 
-// Changement style input files //
+// personnalisation du boutton input files //
 const addPics = document.getElementById("addPics");
 const fileChoice = document.getElementById("fileChoice");
 const imagePreview = document.getElementById("fileSelected");
@@ -220,6 +221,7 @@ const addTitle = document.getElementById("addTitle");
 const addCategory = document.getElementById("categoryChoice");
 const btnValide = document.getElementById("validePics");
 const addPhoto = document.getElementById("addPics");
+const errorMessage_p = document.querySelector(".error-message-p");
 
 form.addEventListener("submit", async function (event) {
   event.preventDefault();
@@ -233,23 +235,50 @@ form.addEventListener("submit", async function (event) {
 
               const response = await fetch(`http://localhost:5678/api/works`, {
                   method: "POST",
-                  headers: { "Authorization": `Bearer ${token}` },
-                  body: formData  // Use the formData object you created
+                  headers: { "Authorization": `Bearer ${token}`},
+                  body: formData  // le corps de la requête contien objet Formdata//
               });
 
               if (response.ok) {
                   console.log("Succès");
-                  form.reset();
-                  imagePreview.src = "";
-                  imagePreview.style.display = "none";
-                  gallery.innerHTML = "";
-                  fetchWorks();
+                  form.reset();// reéinitialiser le formulaire//
+                  imagePreview.src = ""; //supprimer l'aperçu de l'image//
+                  imagePreview.style.display = "none"; //cacher l'aperçu//
+                  gallery.innerHTML = "";// vider la galerie//
+                  fetchWorks(); // recharger la galerie ou les éléments associés//
               } else {
                   console.log("Erreur");
+                  
               }
           } catch (error) {
               console.error("Erreur lors de la requête :", error);
           }
       }
-  }
+      // Message d'erreur sur le titre ajout photo//
+      else{
+
+        if(addTitle.value == "" )
+        {
+          errorMessage_p.style.display = "block";
+        addTitle.style.border = "3px solid red";
+        }
+        else
+        {
+          errorMessage_p.style.display = "none";
+          addTitle.style.border = "none";        
+        }
+        
+        // Bordure rouge sur l'ajout de photo//
+        if(addPhoto.value == "")
+        {
+          zoneAddPics.style.border = "3px solid red";
+        }
+        else
+        {
+          zoneAddPics.style.border = "none";
+        }
+        
+
+      }
+  } 
 );

@@ -360,6 +360,11 @@ dialog::backdrop {
 	width: 100%;
 	gap: 10px
 }
+.error-message-p{
+	display: none;
+	color: red;
+	
+}
 #addTittle, #categoryChoice {
 	width: 80%;
 	height: 30px;
